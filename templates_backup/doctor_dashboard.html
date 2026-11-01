@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+{% block title %}Doctor Dashboard | MedicalChain{% endblock %}
+{% block content %}
+<div class="welcome-row">
+    <div>
+        <span class="eyebrow">OVERVIEW</span>
+        <h1>Welcome, {{ session.get('display_name') }}</h1>
+        <p class="muted">Manage your assigned patients and their medical records.</p>
+    </div>
+    <a class="btn primary" href="{{ url_for('add_record') }}">＋ Add medical record</a>
+</div>
+
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-top"><span>Assigned Patients</span><span class="stat-icon blue">♙</span></div>
+        <div class="stat-number">{{ total_patients }}</div>
+        <div class="stat-foot">Patients under your care</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-top"><span>Medical Records</span><span class="stat-icon teal">▤</span></div>
+        <div class="stat-number">{{ total_records }}</div>
+        <div class="stat-foot">Records in your workspace</div>
+    </div>
+    <div class="stat-card">
+        <div class="stat-top"><span>Security</span><span class="stat-icon green">✓</span></div>
+        <div class="stat-number status-text">Blockchain</div>
+        <div class="stat-foot">Local verification network</div>
+    </div>
+</div>
+
+<div class="section-heading">
+    <div><span class="eyebrow">PATIENT MANAGEMENT</span><h2>Your Patients</h2></div>
+    <a class="text-link" href="{{ url_for('add_patient') }}">＋ Register patient</a>
+</div>
+
+<div class="table-card">
+    <div class="table-scroll">
+    <table>
+        <thead><tr><th>Patient</th><th>Patient ID</th><th>Age</th><th>Gender</th><th>Phone</th></tr></thead>
+        <tbody>
+        {% for p in patients %}
+            <tr>
+                <td><div class="table-person"><div class="avatar small">{{ p.name[0]|upper }}</div><strong>{{ p.name }}</strong></div></td>
+                <td>#{{ p.patient_id }}</td><td>{{ p.age or '-' }}</td><td>{{ p.gender or '-' }}</td><td>{{ p.phone or '-' }}</td>
+            </tr>
+        {% else %}
+            <tr><td colspan="5" class="empty">No patients assigned yet. Register your first patient.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+
+<div class="section-heading">
+    <div><span class="eyebrow">LATEST ACTIVITY</span><h2>Recent Medical Records</h2></div>
+    <a class="text-link" href="{{ url_for('records') }}">View all →</a>
+</div>
+<div class="table-card">
+    <div class="table-scroll">
+    <table>
+        <thead><tr><th>Record ID</th><th>Patient</th><th>Diagnosis</th><th>Doctor</th><th>Action</th></tr></thead>
+        <tbody>
+        {% for r in recent_records %}
+            <tr>
+                <td>#{{ r.record_id }}</td><td>{{ r.patient_name }}</td><td>{{ r.diagnosis }}</td>
+                <td>{{ r.doctor_name or '-' }}</td>
+                <td><a class="text-link" href="{{ url_for('verify_record', record_id=r.record_id) }}">Verify →</a></td>
+            </tr>
+        {% else %}
+            <tr><td colspan="5" class="empty">No medical records available.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</div>
+{% endblock %}

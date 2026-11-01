@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block title %}Login | MedicalChain{% endblock %}{% block content %}
+<div class="card" style="max-width:480px;margin:35px auto"><h1>Welcome to MedicalChain</h1><p class="muted">Secure medical record access</p>
+<form method="post"><label>Email</label><input type="email" name="email" required><label>Password</label><input type="password" name="password" required><p><button type="submit">Login</button></p></form>
+<p>New patient? <a href="{{ url_for('register_patient') }}">Register here</a></p><p>Doctor? <a href="{{ url_for('register_doctor') }}">Create doctor account</a></p></div>{% endblock %}

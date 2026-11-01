@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Medical Records | MedicalChain</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav>
+    <div class="brand">MedicalChain</div>
+    <div class="navlinks">
+        <a href="/">Dashboard</a>
+        <a href="/patients/add">Add Patient</a>
+        <a href="/records/add">Add Record</a>
+        <a href="/records">Records</a>
+    </div>
+</nav>
+<main class="container">
+    <h1>Medical Records</h1>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="alert {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Patient</th>
+                <th>Diagnosis</th>
+                <th>Doctor</th>
+                <th>Blockchain Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for record in records %}
+            <tr>
+                <td>{{ record.record_id }}</td>
+                <td>{{ record.name }}</td>
+                <td>{{ record.diagnosis }}</td>
+                <td>{{ record.doctor_name or '-' }}</td>
+                <td>
+                    {% if record.record_hash %}
+                        <span class="status">Hash stored</span>
+                    {% else %}
+                        <span class="status pending">Not secured</span>
+                    {% endif %}
+                </td>
+                <td><a href="/verify/{{ record.record_id }}">Verify</a></td>
+            </tr>
+        {% else %}
+            <tr><td colspan="6">No medical records found.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+</main>
+</body>
+</html>

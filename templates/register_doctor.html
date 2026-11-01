@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block title %}Doctor Registration{% endblock %}{% block public_content %}
+<div class="card" style="max-width:720px;margin:auto"><h1>Doctor Registration</h1><p class="muted">Your account remains locked until an administrator reviews your registration and license details. Details are not independently verified in this academic demo.</p>
+<form method="post"><div class="grid">
+<div><label>Full name</label><input name="name" required></div><div><label>Email</label><input type="email" name="email" required></div>
+<div><label>Password (minimum 8 characters)</label><input type="password" name="password" minlength="8" required></div><div><label>License number</label><input name="license_number" required></div>
+<div><label>Qualification</label><select name="qualification" required><option value="">Select qualification</option>{% for q in ['MBBS','MD','BAMS','BHMS','BUMS','BSMS'] %}<option value="{{ q }}">{{ q }}</option>{% endfor %}</select></div><div><label>Specialization</label><input name="specialization" required></div>
+<div><label>Department</label><select name="department" required><option value="">Select department</option>{% for d in departments %}<option value="{{ d }}">{{ d }}</option>{% endfor %}</select></div>
+<div><label>Years of experience</label><input type="number" name="years_experience" min="0" max="70" value="0" required></div>
+</div><p><button type="submit">Submit for approval</button></p></form><p class="auth-switch">Already have an account? <a href="{{ url_for('login') }}">Login here</a></p></div>{% endblock %}
+

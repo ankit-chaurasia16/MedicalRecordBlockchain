@@ -1,0 +1,10 @@
+{% extends "base.html" %}{% block title %}Patient Registration{% endblock %}{% block public_content %}
+<div class="card" style="max-width:720px;margin:auto"><h1>Patient Registration</h1><p class="muted">Your department and doctor are selected automatically using the least pending workload.</p>
+<form method="post"><div class="grid">
+<div><label>Full name</label><input name="name" required></div><div><label>Email</label><input type="email" name="email" required></div>
+<div><label>Password (minimum 8 characters)</label><input type="password" name="password" minlength="8" required></div><div><label>Age</label><input type="number" name="age" min="0" max="130" required></div>
+<div><label>Gender</label><select name="gender"><option value="">Prefer not to say</option><option>Female</option><option>Male</option><option>Other</option></select></div>
+<div><label>Phone</label><input name="phone"></div>
+<div><label>Disease category</label><select name="disease_category" required><option value="">Select category</option>{% for c in categories %}<option value="{{ c }}">{{ c }}</option>{% endfor %}</select></div>
+</div><p><button type="submit">Register as Patient</button></p></form><p class="auth-switch">Already have an account? <a href="{{ url_for('login') }}">Login here</a></p></div>{% endblock %}
+

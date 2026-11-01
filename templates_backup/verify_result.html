@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Record Verification | MedicalChain{% endblock %}
+{% block content %}
+<div class="page-heading">
+    <span class="eyebrow">BLOCKCHAIN SECURITY</span>
+    <h1>Record verification</h1>
+    <p class="muted">Compare the current medical record fingerprint with its original blockchain hash.</p>
+</div>
+
+<div class="panel verification-panel">
+    <div class="verification-status {% if verified %}verified{% else %}failed{% endif %}">
+        <div class="verification-symbol">{% if verified %}✓{% else %}!{% endif %}</div>
+        <div>
+            <h2>{% if verified %}Record integrity confirmed{% else %}Verification failed{% endif %}</h2>
+            <p>{% if verified %}The current record matches the stored database and blockchain hashes.{% else %}The record could not be confirmed. It may have been modified or was not secured on the blockchain.{% endif %}</p>
+        </div>
+    </div>
+
+    <div class="record-summary">
+        <div><span>Record ID</span><strong>#{{ record.record_id }}</strong></div>
+        <div><span>Patient</span><strong>{{ record.patient_name }}</strong></div>
+        <div><span>Diagnosis</span><strong>{{ record.diagnosis }}</strong></div>
+        <div><span>Doctor</span><strong>{{ record.doctor_name or '-' }}</strong></div>
+    </div>
+
+    <div class="check-row"><span>Database hash matches</span><strong class="{% if db_matches %}good{% else %}bad{% endif %}">{{ "YES" if db_matches else "NO" }}</strong></div>
+    <div class="check-row"><span>Blockchain hash matches</span><strong class="{% if chain_matches %}good{% else %}bad{% endif %}">{{ "YES" if chain_matches else "NO" }}</strong></div>
+
+    <div class="hash-section">
+        <label>Original stored hash</label>
+        <code>{{ record.record_hash or "Not available" }}</code>
+        <label>Recalculated hash</label>
+        <code>{{ current_hash or "Not available" }}</code>
+        <label>Blockchain transaction reference</label>
+        <code>{{ record.transaction_hash or "Not available" }}</code>
+    </div>
+
+    <a class="btn primary" href="{{ url_for('records') }}">← Back to records</a>
+</div>
+{% endblock %}

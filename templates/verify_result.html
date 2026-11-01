@@ -1,0 +1,4 @@
+{% extends "base.html" %}{% block title %}Record Verification{% endblock %}{% block content %}
+<div class="card"><h1>Blockchain Verification</h1><p><b>Record:</b> #{{ record.record_id }}</p><p><b>Patient:</b> {{ record.patient_name }}</p><p><b>Diagnosis:</b> {{ record.diagnosis }}</p>
+<p><b>Database hash matches:</b> {{ 'Yes' if db_matches else 'No' }}</p><p><b>Blockchain hash matches:</b> {{ 'Yes' if chain_matches else 'No' }}</p>
+<h2>{{ 'Record verified successfully' if verified else 'Record could not be verified' }}</h2>{% if current_hash %}<p class="muted">Calculated SHA-256: {{ current_hash }}</p>{% endif %}<a class="btn secondary" href="{{ url_for('records') }}">Back to records</a></div>{% endblock %}

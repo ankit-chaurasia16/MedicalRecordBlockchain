@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MedicalChain | Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<nav>
+    <div class="brand">MedicalChain</div>
+    <div class="navlinks">
+        <a href="/">Dashboard</a>
+        <a href="/patients/add">Add Patient</a>
+        <a href="/records/add">Add Record</a>
+        <a href="/records">Records</a>
+    </div>
+</nav>
+
+<main class="container">
+    <h1>Medical Record Management System</h1>
+    <p class="subtitle">Blockchain-based medical record integrity demonstration</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+      {% for category, message in messages %}
+        <div class="alert {{ category }}">{{ message }}</div>
+      {% endfor %}
+    {% endwith %}
+
+    <section class="stats">
+        <div class="stat-card">
+            <p>Total Patients</p>
+            <h2>{{ total_patients }}</h2>
+        </div>
+        <div class="stat-card">
+            <p>Total Medical Records</p>
+            <h2>{{ total_records }}</h2>
+        </div>
+    </section>
+
+    <section class="actions">
+        <a class="btn" href="/patients/add">+ Register Patient</a>
+        <a class="btn secondary" href="/records/add">+ Add Medical Record</a>
+        <a class="btn dark" href="/records">View & Verify Records</a>
+    </section>
+
+    <h2>Recent Medical Records</h2>
+    <div class="table-wrap">
+    <table>
+        <thead>
+            <tr>
+                <th>Record ID</th>
+                <th>Patient</th>
+                <th>Diagnosis</th>
+                <th>Doctor</th>
+                <th>Date</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for record in recent_records %}
+            <tr>
+                <td>{{ record.record_id }}</td>
+                <td>{{ record.name }}</td>
+                <td>{{ record.diagnosis }}</td>
+                <td>{{ record.doctor_name or '-' }}</td>
+                <td>{{ record.created_at }}</td>
+                <td><a href="/verify/{{ record.record_id }}">Verify</a></td>
+            </tr>
+        {% else %}
+            <tr><td colspan="6">No records added yet.</td></tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    <p class="note">Academic demonstration only. Do not enter real patient information.</p>
+</main>
+</body>
+</html>

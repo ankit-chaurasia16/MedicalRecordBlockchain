@@ -1,0 +1,9 @@
+{% extends "base.html" %}{% block title %}Doctor Registration{% endblock %}{% block content %}
+<div class="card" style="max-width:720px;margin:auto"><h1>Doctor Registration</h1><p class="muted">Demo registration. Credentials and license details are not professionally verified.</p>
+<form method="post"><div class="grid">
+<div><label>Full name</label><input name="name" required></div><div><label>Email</label><input type="email" name="email" required></div>
+<div><label>Password (minimum 8 characters)</label><input type="password" name="password" minlength="8" required></div><div><label>License number</label><input name="license_number" required></div>
+<div><label>Qualification</label><input name="qualification" placeholder="MBBS, MD" required></div><div><label>Specialization</label><input name="specialization" required></div>
+<div><label>Department</label><select name="department" required><option value="">Select department</option>{% for d in departments %}<option value="{{ d }}">{{ d }}</option>{% endfor %}</select></div>
+<div><label>Years of experience</label><input type="number" name="years_experience" min="0" max="70" value="0" required></div>
+</div><p><button type="submit">Register as Doctor</button></p></form></div>{% endblock %}

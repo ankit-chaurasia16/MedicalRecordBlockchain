@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}{{ role_label }} Registration | MedicalChain{% endblock %}
+{% block public_content %}
+<div class="card auth-card">
+  <p class="eyebrow">MEDICALCHAIN PROFESSIONAL PORTAL</p>
+  <h1>Register as {{ role_label }}</h1>
+  <p class="muted">Your account will stay locked until an administrator reviews and approves your professional details. Qualification and registration details are collected for this academic demo; they are not independently verified.</p>
+  {% with messages = get_flashed_messages(with_categories=true) %}{% for category, message in messages %}<div class="alert {{ category }}">{{ message }}</div>{% endfor %}{% endwith %}
+  <form method="post">
+    <div class="grid">
+      <div><label>Full name *</label><input name="name" required></div>
+      <div><label>Email *</label><input type="email" name="email" required></div>
+      <div><label>Password (minimum 8 characters) *</label><input type="password" name="password" minlength="8" required></div>
+      <div><label>Qualification *</label><select name="qualification" required><option value="">Select qualification</option>{% for q in qualifications %}<option value="{{ q }}">{{ q }}</option>{% endfor %}</select></div>
+      <div><label>Professional registration number *</label><input name="registration_number" required></div>
+      <div><label>Department *</label><select name="department" required><option value="">Select department</option>{% for d in departments %}<option value="{{ d }}">{{ d }}</option>{% endfor %}</select></div>
+      <div><label>Specialization (optional)</label><input name="specialization" placeholder="Keep separate from qualification"></div>
+      <div><label>Years of experience</label><input type="number" name="years_experience" min="0" max="70" value="0" required></div>
+    </div>
+    <p><button type="submit">Submit for approval</button></p>
+  </form>
+  <p class="auth-switch">Already registered? <a href="{{ url_for('login', role=role) }}">Login to {{ role_label }} portal</a></p>
+</div>
+{% endblock %}

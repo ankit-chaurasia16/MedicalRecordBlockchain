@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+{% block title %}Login | MedicalChain{% endblock %}
+
+{% block public_content %}
+<div class="login-page">
+    <div class="login-decoration">
+        <div class="login-brand"><span class="brand-icon">✚</span> MedicalChain</div>
+        <div class="login-message">
+            <span class="eyebrow light">SECURE HEALTHCARE RECORDS</span>
+            <h1>Healthcare records.<br>Built on trust.</h1>
+            <p>A blockchain-based medical record platform designed to support data integrity and transparent verification.</p>
+            <div class="login-feature">✓ Secure role-based access</div>
+            <div class="login-feature">✓ SHA-256 record verification</div>
+            <div class="login-feature">✓ Blockchain-backed integrity</div>
+        </div>
+        <div class="login-footer">MedicalChain Academic Project</div>
+    </div>
+
+    <div class="login-panel">
+        <div class="login-card">
+            <div class="login-symbol">✚</div>
+            <span class="eyebrow">WELCOME BACK</span>
+            <h2>Sign in to MedicalChain</h2>
+            <p class="muted">Enter your account details to continue.</p>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% for category, message in messages %}
+                    <div class="alert {{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endwith %}
+
+            <form method="POST" class="form-stack">
+                <label>Email address</label>
+                <input type="email" name="email" placeholder="you@example.com" required>
+
+                <label>Password</label>
+                <input type="password" name="password" placeholder="Enter your password" required>
+
+                <button class="btn primary full" type="submit">Sign in securely →</button>
+            </form>
+
+            <div class="login-note">Access is restricted according to your assigned account role.</div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Add Medical Record | MedicalChain{% endblock %}
+{% block content %}
+<div class="form-page">
+    <div class="page-heading">
+        <span class="eyebrow">CLINICAL DOCUMENTATION</span>
+        <h1>Create medical record</h1>
+        <p class="muted">Save the record in MySQL and secure its SHA-256 hash on the blockchain.</p>
+    </div>
+
+    {% if patients %}
+    <form method="POST" class="panel form-stack">
+        <label>Select assigned patient *</label>
+        <select name="patient_id" required>
+            <option value="">Choose patient</option>
+            {% for p in patients %}
+                <option value="{{ p.patient_id }}">{{ p.name }} — Patient #{{ p.patient_id }}</option>
+            {% endfor %}
+        </select>
+        <label>Diagnosis *</label>
+        <input name="diagnosis" required placeholder="Enter diagnosis">
+        <label>Prescription / Treatment</label>
+        <textarea name="prescription" rows="5" placeholder="Enter prescription or treatment details"></textarea>
+        <div class="blockchain-note">◆ The record hash will be calculated and submitted to the local blockchain after saving.</div>
+        <button class="btn primary" type="submit">Save and secure record →</button>
+    </form>
+    {% else %}
+        <div class="panel empty">No assigned patients. Register a patient before creating a medical record.</div>
+        <a class="btn primary" href="{{ url_for('add_patient') }}">Register patient</a>
+    {% endif %}
+</div>
+{% endblock %}

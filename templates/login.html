@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Sign in | MedicalChain{% endblock %}
+{% block public_content %}
+<section class="auth-layout">
+  <div class="auth-intro">
+    <div class="intro-kicker">A MORE CONNECTED CARE JOURNEY</div>
+    <h1>Medical records.<br><span>Built on trust.</span></h1>
+    <p>One workspace for patients and healthcare teams, with role-based access and blockchain-backed record integrity demonstrations.</p>
+    <div class="intro-points">
+      <div><span class="intro-point-icon">✓</span><span><strong>Role-based workspaces</strong><small>Access is tailored to each account type.</small></span></div>
+      <div><span class="intro-point-icon">⌁</span><span><strong>Record integrity checks</strong><small>Verify whether a saved record has changed.</small></span></div>
+      <div><span class="intro-point-icon">＋</span><span><strong>Connected care teams</strong><small>Keep professional notes in one demo platform.</small></span></div>
+    </div>
+    <div class="intro-disclaimer">Academic demonstration only. Not for real clinical use.</div>
+  </div>
+  <div class="auth-panel">
+    <div class="card auth-card login-card">
+      <div class="auth-card-mark">✚</div>
+      <p class="eyebrow">WELCOME BACK</p>
+      <h2>Sign in to your portal</h2>
+      <p class="muted">Enter your account details to continue.</p>
+      {% with messages = get_flashed_messages(with_categories=true) %}
+        {% for category, message in messages %}<div class="alert {{ category }}">{{ message }}</div>{% endfor %}
+      {% endwith %}
+      <form method="post" class="auth-form">
+        <label for="role">Portal / account type</label>
+        <select id="role" name="role" {% if role_filter %}disabled{% endif %} required>
+          <option value="">Select account type</option>
+          {% for r in login_roles %}<option value="{{ r }}" {% if role_filter == r %}selected{% endif %}>{{ role_labels.get(r, r|replace('_',' ')|title) }}</option>{% endfor %}
+        </select>
+        {% if role_filter %}<input type="hidden" name="role" value="{{ role_filter }}">{% endif %}
+        <label for="email">Email address</label>
+        <input id="email" type="email" name="email" autocomplete="username" placeholder="you@example.com" required>
+        <label for="password">Password</label>
+        <input id="password" type="password" name="password" autocomplete="current-password" placeholder="Enter your password" required>
+        <button type="submit" class="auth-submit">Sign in <span>→</span></button>
+      </form>
+      <div class="auth-links">
+        <strong>New to MedicalChain?</strong>
+        <a href="{{ url_for('register_patient') }}">Patient registration <span>→</span></a>
+        <a href="{{ url_for('register_doctor') }}">Doctor registration <span>→</span></a>
+        <a href="{{ url_for('register_professional', role='nurse') }}">Nurse registration <span>→</span></a>
+        <a href="{{ url_for('register_professional', role='pharmacist') }}">Pharmacist registration <span>→</span></a>
+        <a href="{{ url_for('register_professional', role='lab_technician') }}">Lab technician registration <span>→</span></a>
+        <a href="{{ url_for('register_professional', role='physiotherapist') }}">Physiotherapist registration <span>→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
